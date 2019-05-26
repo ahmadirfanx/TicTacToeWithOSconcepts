@@ -12,13 +12,20 @@ bool ValidateMove();
 void ChangeTurns();
 bool CheckWinningCondition();
 bool CheckIfFull();
+void VsPlayer();
+void VsComputer();
+void menu();
 
 pthread_mutex_t lock;  //mutex lock
 char array[9];
 char CurrentTurn='X';
 char Winner=0;
 
-int main(){ //--------------------------------------main
+int main(){
+menu();
+}
+
+void VsPlayer(){ //--------------------------------------main
 pthread_t main_thread; //parent thread
 pthread_create(&main_thread, NULL, initializeArray, NULL); 
 pthread_join(main_thread, NULL);
@@ -36,10 +43,30 @@ while (terminate==false){
 	pthread_join(th2, NULL);
 	
 	ChangeTurns();
-}
-return 0;
+	}
 }
 
+void VsComputer(){
+
+
+}
+
+void menu(){
+cout << "\t for Player 1 vs. Player 2 press 1"<< endl << "\t for Player vs. Computer press 2" << endl; 
+int choice;
+cin >> choice;
+switch(choice){
+	case 1:
+	VsPlayer();
+	break;
+	case 2: 
+	VsComputer();
+	break;
+	default: 
+	cout << "invalid input. please re-enter value..."<< endl;
+	menu();
+	}
+}
 void *initializeArray(void *Args){
 cout << "initializing Array" << endl;
 for (int i=0; i<9; i++)
