@@ -1,10 +1,14 @@
 //developed by Ahmad Irfan and Amna Zahoor at FAST National University, Pakistan.
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 #include <unistd.h>
 #include <stdlib.h>
 #include <pthread.h>
 
+
 using namespace std;
+srand(time(0));
 void *printBoard(void *args);
 void *initializeArray(void *args);
 bool PlaceMove();
@@ -15,6 +19,8 @@ bool CheckIfFull();
 void VsPlayer();
 void VsComputer();
 void menu();
+void AttackMode();
+void PlaceRandom();
 
 pthread_mutex_t lock;  //mutex lock
 char array[9];
@@ -44,28 +50,60 @@ while (terminate==false){
 	
 	ChangeTurns();
 	}
+cout << "Player " << Winner << " wins the game!" << endl;
 }
 
 void VsComputer(){
 
-
+}
+void AttackMode(){
+if ((array[0]==' ' && array[1]==array[2] && array[2]=='X')||(array[0]==' ' && array[3]==array[6] && array[6]=='X') || (array[0]==' ' && array[4]==array[8] && array[8]=='X')) {
+array[0]='O';
+}
+else if ((array[2]==' ' && array[0]==array[1] && array[1]=='X')||(array[2]==' ' && array[4]==array[6] && array[6]=='X') || (array[2]==' ' && array[5]==array[8] && array[8]=='X')) {
+array[2]='O';
+}
+else if ((array[6]==' ' && array[7]==array[8] && array[8]=='X')||(array[6]==' ' && array[7]==array[8] && array[8]=='X') || (array[6]==' ' && array[4]==array[2] && array[2]=='X')) {
+array[6]='O';
+}
+else if ((array[8]==' ' && array[6]==array[7] && array[7]=='X')||(array[8]==' ' && array[0]==array[4] && array[4]=='X') || (array[8]==' ' && array[2]==array[5] && array[5]=='X')) {
+array[8]='O';
+}
+else if ((array[1]==' ' && array[0]==array[2] && array[2]=='X')||(array[1]==' ' && array[4]==array[7] && array[7]=='X')) {
+array[1]='O';
+}
+else if ((array[3]==' ' && array[4]==array[5] && array[5]=='X')||(array[3]==' ' && array[1]==array[7] && array[7]=='X')) {
+array[3]='O';
+}
+else if ((array[5]==' ' && array[3]==array[4] && array[4]=='X')||(array[5]==' ' && array[2]==array[8] && array[8]=='X')) {
+array[5]='O';
+}
+else if ((array[7]==' ' && array[6]==array[8] && array[8]=='X')||(array[7]==' ' && array[1]==array[4] && array[4]=='X')) {
+array[7]='O';
+}
+else if ((array[4]==' ' && array[7]==array[1] && array[1]=='X')||(array[4]==' ' && array[3]==array[5] && array[5]=='X') ||(array[4]==' ' && array[0]==array[8] && array[8]=='X') ||(array[4]==' ' && array[2]==array[6] && array[6]=='X')) {
+array[4]='O';
+}
+void PlaceRandom();
 }
 
+void PlaceRandom(){
+
+}
 void menu(){
 cout << "\t for Player 1 vs. Player 2 press 1"<< endl << "\t for Player vs. Computer press 2" << endl; 
-int choice;
+string choice;
 cin >> choice;
-switch(choice){
-	case 1:
-	VsPlayer();
-	break;
-	case 2: 
-	VsComputer();
-	break;
-	default: 
-	cout << "invalid input. please re-enter value..."<< endl;
+if (choice=="1"){
+VsPlayer();
+}
+else if (choice =="2"){
+VsComputer();
+}
+else {
+cout << "invalid input. please re-enter value..."<< endl;
 	menu();
-	}
+}
 }
 void *initializeArray(void *Args){
 cout << "initializing Array" << endl;
@@ -124,7 +162,6 @@ else return false;
 }
 
 bool CheckWinningCondition(){
-
 if (array[0]==array[1] && array[1]==array[2] && (array[2]=='X' || array[2]=='O')) Winner=array[2];
 else if (array[0]==array[3] && array[3]==array[6] && (array[6]=='X' || array[2]=='O')){
  Winner=array[6];}
